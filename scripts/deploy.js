@@ -8,10 +8,10 @@ async function main() {
   console.log("Account balance:", balance.toString());
 
   // Deploy MockCPIOracle
-  const MockCPIOracle = await ethers.getContractFactory("MockCPIOracle");
-  const mockCPIOracle = await MockCPIOracle.deploy();
-  await mockCPIOracle.deployed();
-  console.log("MockCPIOracle contract address:", mockCPIOracle.address);
+  const MockCPIDatafeed = await ethers.getContractFactory("MockCPIDatafeed");
+  const mockCPIDatafeed  = await MockCPIOracle.deploy();
+  await mockCPIDatafeed .deployed();
+  console.log("MockCPIDatafeed contract address:", mockCPIOracle.address);
 
   // Deploy MortgageServicingARM using the address of the MockCPIOracle
   const MortgageServicingARM = await ethers.getContractFactory("MortgageServicingARM");
