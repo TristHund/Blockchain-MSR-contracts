@@ -11,6 +11,7 @@ This repository contains the smart contracts and related code for setting up Adj
   - [Installation](#installation)
 - [Smart Contracts](#smart-contracts)
   - [MortgageServicingARM](#mortgageservicingarm)
+  - [MockCPIDatafeed](#mockcpidatafeed)
 - [Deployment](#deployment)
 - [Testing](#testing)
 - [Usage](#usage)
@@ -62,38 +63,51 @@ cd msr-arm-smart-contracts
 npm install
 ```
 
-## Smart Contracts
+## Smart Contracts 
 
-### MortgageServicingARM
+## MortgageServicingARM
 
-The main contract for managing ARM loans and mortgage servicing rights. Key functions include:
+The main contract for managing ARM loans and mortgage servicing rights. 
 
-- `originateLoan()`: Originates a new loan using the following parametes:
+Key functions include:
 
-        **loanId** - The identifying number for the loan (Any integer Value)
+### originateLoan() 
+Originates a new loan using the following parametes:
 
-        **ipfsHash** - (under development) This is a hash that links to a location where additional off chain loan data will be available. Currently I am using test strings but this will may be some location on IPFS or another resource offchain where perhaps more sensitive borrower data can be safely stored (some string value)
+  - **loanId** - The identifying number for the loan (_Any integer Value_)
 
-        **amount** - Amount of the loan (dollar amount 100000 for $100,000.00)
+  - **ipfsHash** - (under development) This is a hash that links to a location where additional off chain loan data will be available. Currently I am using test strings but this will may be some location on IPFS or another resource offchain where perhaps more sensitive borrower data can be safely stored (_some string value_)
 
-        **initialInterestRate** - The starting interest rate for the loan (Basis Points(BPS) - This value is a standard unit of measurment in finance where 1 point is equal to 1/100th of a percent. For example if you use the value 200 here that would be equal to 2%)
+  - **amount** - Amount of the loan (_dollar amount 100000 for $100,000.00_)
 
-        **margin** - The adjustment in percentage in this contract is based on an index set by the CPI value with the added contractual margin (value set by originator to add to the index) set on loan origination. (BPS)
+  - **initialInterestRate** - The starting interest rate for the loan (**Basis Points(BPS)** - _This value is a standard unit of measurment in finance where 1 point is equal to 1/100th of a percent. For example if you use the value 200 here that would be equal to 2%_)
 
-        **lifetimeCap** - This is the capped percentage amount on the loan, meaning the loan will never exceed this percentage amount once achieved. (BPS)
+  - **margin** - The adjustment in percentage in this contract is based on an index set by the CPI value with the added contractual margin (value set by originator to add to the index) set on loan origination. (_BPS_)
 
-        **paymentDate** - Date of last payment (Unix Epoch Time, where 1719763200 would be June 30 2024)
+  - **lifetimeCap** - This is the capped percentage amount on the loan, meaning the loan will never exceed this percentage amount once achieved. (_BPS_)
 
-        **dueDate** Date of next payment due (Unix Epoch Time)
+  - **paymentDate** - Date of last payment (_Unix Epoch Time, where 1719763200 would be June 30 2024_)
 
-        **adjustmentInterval** - Time between rate adjustments (Unix time where 31556926 would be 1 year)
+  - **dueDate** Date of next payment due (_Unix Epoch Time_)
+
+  - **adjustmentInterval** - Time between rate adjustments (_Unix time where 31556926 would be 1 year_)
 
 
-- `adjustInterestRate()`: Adjust the interest rate of a loan on chain based on CPI data and margin.
+### adjustInterestRate()
 
-- `makePayment()`: Allow servicer to process payments on chain and update the loan status.
+Adjusts the interest rate of a loan on chain based on CPI data and margin.
 
-- `resetPaymentStatus()`: Resets the payment status for the next month.
+### makePayment()
+
+Allow servicer to process payments on chain and update the loan status.
+
+### resetPaymentStatus()
+
+Resets the payment status for the next month.
+
+## MockCPIDatafeed
+
+This is a smart contract that emulates the Chainlink Datafeed for CPI. This is critical in the rate adjustment calculation.
 
 ## Deployment
 
