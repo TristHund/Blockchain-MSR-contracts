@@ -158,8 +158,8 @@ contract MortgageServicingARM {
         Loan storage loan = loans[loanId];
 
         // Ensure a month has passed since the last payment 
-        //Requirement commented out for testing
-        //require(block.timestamp >= loan.paymentDate + 30 days, "Payment status can only be reset after a month");
+        // Requirement commented out for testing
+        // require(block.timestamp >= loan.paymentDate + 30 days, "Payment status can only be reset after a month");
 
         loan.isPaid = false;
 
